@@ -1,6 +1,9 @@
-# country_quiz
+# Country trivia
 
-A new Flutter project.
+Country trivia game made with Flutter
+
+<img width="849" alt="Screenshot 2023-06-26 at 7 31 32 PM" src="https://github.com/ralphZero/contry-trivia-flutter/assets/40446586/9c05d248-3017-4aa1-8cc0-b9bf8863fa6d">
+
 
 ## Getting Started
 
