@@ -1,3 +1,4 @@
+import 'package:country_quiz/features/controllers/api_call.dart';
 import 'package:country_quiz/mocks/home_cms.dart';
 import 'package:country_quiz/widgets/home/cta_group.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    fetchCountryData().then((value) => print(value));
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
