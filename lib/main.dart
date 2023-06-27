@@ -1,8 +1,13 @@
+import 'package:flutter/services.dart';
+
 import '../utils/constants.dart';
 import 'package:country_quiz/pages/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: primary,
+  ));
   runApp(const MyApp());
 }
 
