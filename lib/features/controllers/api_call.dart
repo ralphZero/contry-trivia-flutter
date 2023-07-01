@@ -26,11 +26,3 @@ Future<List<CountryApiResponse>> fetchCountryData() async {
     }
   }
 }
-
-// Future<Question> prepareTrivia() async {
-//   // get dataList from api or cache
-//   await fetchCountryData();
-//   // generate a question
-//   // return question
-//   return;
-// }
