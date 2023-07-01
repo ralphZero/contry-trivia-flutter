@@ -16,12 +16,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
-  void initState() {
-    super.initState();
-    fetchCountryData().then((value) => print(value));
-  }
-
-  @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenPaddingTop = MediaQuery.of(context).size.height * 0.15;
