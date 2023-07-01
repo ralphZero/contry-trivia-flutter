@@ -21,7 +21,7 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
-    if (!appState.isLoading) {
+    if (!appState.getLoadingState) {
       // has data
       return const QuestionPage();
     } else {
