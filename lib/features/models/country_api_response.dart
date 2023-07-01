@@ -1,6 +1,6 @@
 class CountryApiResponse {
-  final Map<String, dynamic> flags;
-  final Map<String, dynamic> name;
+  final String flags;
+  final String name;
   final List<dynamic> capital;
 
   CountryApiResponse({
@@ -12,8 +12,8 @@ class CountryApiResponse {
   factory CountryApiResponse.fromJson(Map<String, dynamic> json) {
     return CountryApiResponse(
       capital: json['capital'],
-      name: json['name'],
-      flags: json['flags'],
+      name: json['name']['common'],
+      flags: json['flags']['png'],
     );
   }
 
