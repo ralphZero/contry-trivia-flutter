@@ -1,7 +1,7 @@
 class CountryApiResponse {
-  final Map<String, String> flags;
-  final Map<String, String> name;
-  final List<String> capital;
+  final Map<String, dynamic> flags;
+  final Map<String, dynamic> name;
+  final List<dynamic> capital;
 
   CountryApiResponse({
     required this.capital,

@@ -18,7 +18,7 @@ Future<List<CountryApiResponse>> fetchCountryData() async {
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
-      cache.setString('countries', jsonEncode(response.body));
+      cache.setString('countries', response.body);
       final List<dynamic> jsonArray = jsonDecode(response.body);
       return CountryApiResponse.fromJsonArray(jsonArray);
     } else {
