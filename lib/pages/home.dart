@@ -1,5 +1,6 @@
 import 'package:country_quiz/features/controllers/api_call.dart';
 import 'package:country_quiz/mocks/home_cms.dart';
+import 'package:country_quiz/pages/wrapper.dart';
 import 'package:country_quiz/widgets/home/cta_group.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +30,11 @@ class _HomeState extends State<Home> {
     var homeCMS = HomeCMS();
 
     void handlePlay() {
-      print('Play');
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => const Wrapper(),
+        ),
+      );
     }
 
     void handleOpenLeaderboard() {
