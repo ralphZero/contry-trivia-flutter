@@ -1,4 +1,3 @@
-import 'package:country_quiz/features/controllers/api_call.dart';
 import 'package:country_quiz/mocks/home_cms.dart';
 import 'package:country_quiz/pages/wrapper.dart';
 import 'package:country_quiz/widgets/home/cta_group.dart';
@@ -32,7 +31,8 @@ class _HomeState extends State<Home> {
     }
 
     void handleOpenLeaderboard() {
-      print('Open Leaderboard');
+      // print('Open Leaderboard');
+      // TODO: Go to leaderboard page
     }
 
     return Scaffold(
