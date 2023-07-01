@@ -1,7 +1,7 @@
-import 'package:country_quiz/features/controllers/api_call.dart';
-import 'package:country_quiz/features/models/country_api_response.dart';
+import 'package:country_quiz/features/models/app_state.dart';
 import 'package:country_quiz/pages/question.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -11,32 +11,22 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  late Future<List<CountryApiResponse>> countryData;
-
   @override
   void initState() {
     super.initState();
-    countryData = fetchCountryData();
+    final appState = Provider.of<AppState>(context, listen: false);
+    appState.initialData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: countryData,
-      builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data != null) {
-          // has data
-          return QuestionPage(
-            data: snapshot.data!,
-          );
-        } else if (snapshot.hasError) {
-          // has error
-          return const Placeholder();
-        } else {
-          // loading
-          return const CircularProgressIndicator();
-        }
-      },
-    );
+    final appState = Provider.of<AppState>(context);
+    if (!appState.isLoading) {
+      // has data
+      return const QuestionPage();
+    } else {
+      // loading
+      return const CircularProgressIndicator();
+    }
   }
 }
