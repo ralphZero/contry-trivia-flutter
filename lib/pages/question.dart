@@ -45,66 +45,67 @@ class _QuestionPageState extends State<QuestionPage> {
           decoration: const BoxDecoration(
             gradient: pageGradient,
           ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: customAppBarHeight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close_rounded),
-                      onPressed: handleOnClose,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      'timer',
-                      style: GoogleFonts.inter(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: customScoreHeight,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ScoreBox(
-                      currScore: 0,
-                      cms: cms,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  width: MediaQuery.of(context).size.width - dynamicMargin,
-                  margin: EdgeInsets.fromLTRB(
-                    dynamicMargin,
-                    dynamicMargin,
-                    dynamicMargin,
-                    dynamicMargin * 2,
-                  ),
-                  padding: const EdgeInsets.all(18.0),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(16.0),
-                    ),
-                  ),
-                  child: Consumer<AppState>(
-                    builder: (ctx, state, child) {
-                      bool hasFlag = state.getCurrentQuestion!.hasFlag;
-                      var capital = state.getCurrentQuestion!.question.capital;
-                      var flagUrl = state.getCurrentQuestion!.question.flag;
-                      var answers = state.getCurrentQuestion!.answers;
-                      var answerId = state.getCurrentQuestion!.currAnswer;
+          child: Consumer<AppState>(
+            builder: (ctx, state, child) {
+              bool hasFlag = state.getCurrentQuestion!.hasFlag;
+              var capital = state.getCurrentQuestion!.question.capital;
+              var flagUrl = state.getCurrentQuestion!.question.flag;
+              var answers = state.getCurrentQuestion!.answers;
+              var answerId = state.getCurrentQuestion!.currAnswer;
+              var score = state.getScore;
 
-                      return Column(
+              return Column(
+                children: [
+                  SizedBox(
+                    height: customAppBarHeight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.close_rounded),
+                          onPressed: handleOnClose,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'timer',
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: customScoreHeight,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ScoreBox(
+                          currScore: score,
+                          cms: cms,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - dynamicMargin,
+                      margin: EdgeInsets.fromLTRB(
+                        dynamicMargin,
+                        dynamicMargin,
+                        dynamicMargin,
+                        dynamicMargin * 2,
+                      ),
+                      padding: const EdgeInsets.all(18.0),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16.0),
+                        ),
+                      ),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -158,12 +159,12 @@ class _QuestionPageState extends State<QuestionPage> {
                             ],
                           ),
                         ],
-                      );
-                    },
-                  ),
-                ),
-              )
-            ],
+                      ),
+                    ),
+                  )
+                ],
+              );
+            },
           ),
         ),
       ),
