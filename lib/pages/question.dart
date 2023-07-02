@@ -1,11 +1,14 @@
 import 'package:country_quiz/mocks/question_cms.dart';
 import 'package:country_quiz/utils/constants.dart';
+import 'package:country_quiz/widgets/question/question_flag.dart';
+import 'package:country_quiz/widgets/question/question_prompt.dart';
 import 'package:country_quiz/widgets/question/score_box.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../features/models/app_state.dart';
+import '../features/models/question.dart';
+import '../widgets/question/answer_list.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({super.key});
@@ -16,6 +19,7 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
   var cms = QuestionPageCMS();
+  late Question currentQuestion;
 
   @override
   void initState() {
@@ -25,11 +29,6 @@ class _QuestionPageState extends State<QuestionPage> {
   void handleOnClose() {
     print('tap');
     return;
-  }
-
-  void printToConsole(BuildContext context) {
-    final appState = Provider.of<AppState>(context, listen: false);
-    appState.generateQuestion();
   }
 
   @override
@@ -81,13 +80,49 @@ class _QuestionPageState extends State<QuestionPage> {
               ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.all(dynamicMargin),
-                  padding: const EdgeInsets.all(8.0),
+                  width: MediaQuery.of(context).size.width - dynamicMargin,
+                  margin: EdgeInsets.fromLTRB(
+                    dynamicMargin,
+                    dynamicMargin,
+                    dynamicMargin,
+                    dynamicMargin * 2,
+                  ),
+                  padding: const EdgeInsets.all(18.0),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(
                       Radius.circular(16.0),
                     ),
+                  ),
+                  child: Consumer<AppState>(
+                    builder: (ctx, state, child) {
+                      bool hasFlag = state.getCurrentQuestion!.hasFlag;
+                      var capital = state.getCurrentQuestion!.question.capital;
+                      var flagUrl = state.getCurrentQuestion!.question.flag;
+                      var answers = state.getCurrentQuestion!.answers;
+                      var answerId = state.getCurrentQuestion!.currAnswer;
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          QuestionFlag(
+                            flagUrl: flagUrl,
+                            hasFlag: hasFlag,
+                          ),
+                          Flexible(
+                            child: QuestionPrompt(
+                              capital: capital,
+                              hasFlag: hasFlag,
+                              cms: cms,
+                            ),
+                          ),
+                          AnswerList(
+                            answers: answers,
+                            answerId: answerId,
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               )

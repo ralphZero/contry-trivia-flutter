@@ -22,7 +22,7 @@ class AppState extends ChangeNotifier {
     isLoading = true;
     data = await fetchCountryData();
     isLoading = false;
-    notifyListeners();
+    generateQuestion();
   }
 
   void generateQuestion() {
