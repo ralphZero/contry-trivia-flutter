@@ -22,6 +22,11 @@ class CallToActions extends StatelessWidget {
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: tertiary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                12.0,
+              ),
+            ),
             fixedSize: const Size.fromWidth(200.0),
             textStyle: GoogleFonts.inter(
               fontWeight: FontWeight.bold,
@@ -43,6 +48,11 @@ class CallToActions extends StatelessWidget {
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: leadearBoardBtnColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                12.0,
+              ),
+            ),
             fixedSize: const Size.fromWidth(200.0),
             textStyle: GoogleFonts.inter(
               fontWeight: FontWeight.bold,

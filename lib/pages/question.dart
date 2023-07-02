@@ -31,6 +31,8 @@ class _QuestionPageState extends State<QuestionPage> {
     return;
   }
 
+  void handleNext(context) {}
+
   @override
   Widget build(BuildContext context) {
     double customAppBarHeight = MediaQuery.of(context).size.height * 0.05;
@@ -104,22 +106,56 @@ class _QuestionPageState extends State<QuestionPage> {
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          QuestionFlag(
-                            flagUrl: flagUrl,
-                            hasFlag: hasFlag,
-                          ),
-                          Flexible(
-                            child: QuestionPrompt(
-                              capital: capital,
-                              hasFlag: hasFlag,
-                              cms: cms,
-                            ),
+                          Column(
+                            children: [
+                              QuestionFlag(
+                                flagUrl: flagUrl,
+                                hasFlag: hasFlag,
+                              ),
+                              QuestionPrompt(
+                                capital: capital,
+                                hasFlag: hasFlag,
+                                cms: cms,
+                              ),
+                            ],
                           ),
                           AnswerList(
                             answers: answers,
                             answerId: answerId,
                             onOptionPressed: (selectedId) {},
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: tertiary,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                      12.0,
+                                    ),
+                                  ),
+                                  fixedSize: const Size.fromWidth(200.0),
+                                  textStyle: GoogleFonts.inter(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                                onPressed: () => handleNext(context),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  child: Text(
+                                    cms.cta.title,
+                                    style: const TextStyle(
+                                      color: accentText,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       );
