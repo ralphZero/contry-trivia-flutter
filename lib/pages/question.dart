@@ -119,6 +119,7 @@ class _QuestionPageState extends State<QuestionPage> {
                           AnswerList(
                             answers: answers,
                             answerId: answerId,
+                            onOptionPressed: (selectedId) {},
                           ),
                         ],
                       );
