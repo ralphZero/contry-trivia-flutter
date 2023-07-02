@@ -2,7 +2,10 @@ import 'package:country_quiz/features/models/question_item.dart';
 import 'package:country_quiz/widgets/question/option.dart';
 import 'package:flutter/material.dart';
 
-class AnswerList extends StatefulWidget {
+class AnswerList extends StatelessWidget {
+  final int selectedId;
+  final bool disabled;
+  final bool hasFlag;
   final List<QuestionItem> answers;
   final int answerId;
   final void Function(int id) onOptionPressed;
@@ -12,43 +15,30 @@ class AnswerList extends StatefulWidget {
     required this.answers,
     required this.answerId,
     required this.onOptionPressed,
+    this.disabled = false,
+    this.selectedId = -1,
+    required this.hasFlag,
   });
 
   @override
-  State<AnswerList> createState() => _AnswerListState();
-}
-
-class _AnswerListState extends State<AnswerList> {
-  int? selectedId;
-  bool disabled = false;
-
-  @override
   Widget build(BuildContext context) {
-    handleOnOptionSelected(int selectedOptionId) {
-      setState(() {
-        selectedId = selectedOptionId;
-        disabled = true;
-      });
-      widget.onOptionPressed(selectedOptionId);
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: widget.answers.map(
+      children: answers.map(
         (answer) {
-          return selectedId != null && answer.id == selectedId
+          return selectedId != -1 && answer.id == selectedId
               ? Option(
-                  onPressed: handleOnOptionSelected,
-                  answerCopy: answer.name,
+                  onPressed: onOptionPressed,
+                  answerCopy: hasFlag ? answer.name : answer.capital,
                   id: answer.id,
-                  state: answer.id == widget.answerId
+                  state: answer.id == answerId
                       ? OptionState.success
                       : OptionState.failed,
                   disabled: disabled,
                 )
               : Option(
-                  onPressed: handleOnOptionSelected,
-                  answerCopy: answer.name,
+                  onPressed: onOptionPressed,
+                  answerCopy: hasFlag ? answer.name : answer.capital,
                   id: answer.id,
                   state: OptionState.normal,
                   disabled: disabled,

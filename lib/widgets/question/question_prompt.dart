@@ -1,16 +1,18 @@
+import 'dart:convert';
+
 import 'package:country_quiz/mocks/question_cms.dart';
 import 'package:country_quiz/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionPrompt extends StatelessWidget {
-  final String capital;
+  final String name;
   final bool hasFlag;
   final QuestionPageCMS? cms;
 
   const QuestionPrompt({
     super.key,
-    required this.capital,
+    required this.name,
     required this.hasFlag,
     this.cms,
   });
@@ -47,7 +49,7 @@ class QuestionPrompt extends StatelessWidget {
               ),
               const SizedBox(width: 5.0),
               Text(
-                capital,
+                utf8.decode(utf8.encode(name)),
                 style: capitalStyle,
               ),
               const SizedBox(width: 5.0),

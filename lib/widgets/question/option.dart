@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:country_quiz/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,7 +42,7 @@ class Option extends StatelessWidget {
       ),
       onPressed: !disabled ? () => onPressed(id) : null,
       child: Text(
-        answerCopy,
+        utf8.decode(utf8.encode(answerCopy)),
         style: GoogleFonts.inter(
           color: textColor,
           fontWeight: FontWeight.bold,

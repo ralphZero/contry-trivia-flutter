@@ -19,19 +19,48 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
   var cms = QuestionPageCMS();
-  late Question currentQuestion;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  bool showNextButton = false;
+  int selectedAnswerId = -1;
+  bool disabledOptions = false;
 
   void handleOnClose() {
     print('tap');
     return;
   }
 
-  void handleNext(context) {}
+  void handleNext(BuildContext context) {
+    // generate next question
+    var appState = context.read<AppState>();
+
+    setState(() {
+      disabledOptions = false;
+      selectedAnswerId = -1;
+      showNextButton = false;
+    });
+
+    appState.generateQuestion();
+  }
+
+  void handleOnOptionPressed(int selectedId) {
+    // if correct question
+    var appState = context.read<AppState>();
+    var currentAnswerId = appState.currQuestion!.currAnswer;
+
+    setState(() {
+      disabledOptions = true;
+      selectedAnswerId = selectedId;
+    });
+
+    if (currentAnswerId == selectedId) {
+      appState.updateScore();
+      setState(() {
+        showNextButton = true;
+      });
+    } else {
+      // TODO: Wait and sent to results page
+      print('Game over');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +77,7 @@ class _QuestionPageState extends State<QuestionPage> {
           child: Consumer<AppState>(
             builder: (ctx, state, child) {
               bool hasFlag = state.getCurrentQuestion!.hasFlag;
-              var capital = state.getCurrentQuestion!.question.capital;
+              var name = state.getCurrentQuestion!.question.name;
               var flagUrl = state.getCurrentQuestion!.question.flag;
               var answers = state.getCurrentQuestion!.answers;
               var answerId = state.getCurrentQuestion!.currAnswer;
@@ -116,46 +145,53 @@ class _QuestionPageState extends State<QuestionPage> {
                                 hasFlag: hasFlag,
                               ),
                               QuestionPrompt(
-                                capital: capital,
+                                name: name,
                                 hasFlag: hasFlag,
                                 cms: cms,
                               ),
                             ],
                           ),
                           AnswerList(
+                            hasFlag: hasFlag,
                             answers: answers,
                             answerId: answerId,
-                            onOptionPressed: (selectedId) {},
+                            onOptionPressed: handleOnOptionPressed,
+                            disabled: disabledOptions,
+                            selectedId: selectedAnswerId,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: tertiary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      12.0,
+                              showNextButton
+                                  ? ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: tertiary,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12.0,
+                                          ),
+                                        ),
+                                        fixedSize: const Size.fromWidth(200.0),
+                                        textStyle: GoogleFonts.inter(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                      onPressed: () => handleNext(context),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16.0),
+                                        child: Text(
+                                          cms.cta.title,
+                                          style: const TextStyle(
+                                            color: accentText,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(
+                                      height: 52.0,
                                     ),
-                                  ),
-                                  fixedSize: const Size.fromWidth(200.0),
-                                  textStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                                onPressed: () => handleNext(context),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0),
-                                  child: Text(
-                                    cms.cta.title,
-                                    style: const TextStyle(
-                                      color: accentText,
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ],

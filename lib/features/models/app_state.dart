@@ -46,9 +46,15 @@ class AppState extends ChangeNotifier {
       );
     }
 
-    var questions = selectedCountryData.sublist(1, 2);
+    var questions = selectedCountryData.sublist(0, 1);
     selectedCountryData.shuffle();
-    var answers = selectedCountryData.sublist(1, selectedCountryData.length);
+    var answers =
+        selectedCountryData.sublist(0, selectedCountryData.length - 1);
+    if (answers.indexWhere((answer) => answer.id == questions[0].id) == -1) {
+      answers.removeAt(0);
+      answers.add(questions[0]);
+      answers.shuffle();
+    }
     var hasFlag = Random().nextInt(10).floor() % 2 == 0 ? false : true;
 
     currQuestion = Question(
@@ -58,6 +64,15 @@ class AppState extends ChangeNotifier {
       question: questions[0],
     );
 
+    print(questions);
+    print(questions[0].capital);
+    print(questions[0].name);
+
+    notifyListeners();
+  }
+
+  void updateScore() {
+    score++;
     notifyListeners();
   }
 }
