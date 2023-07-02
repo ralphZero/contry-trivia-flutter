@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../features/models/app_state.dart';
-import '../features/models/question.dart';
 import '../widgets/question/answer_list.dart';
 
 class QuestionPage extends StatefulWidget {
