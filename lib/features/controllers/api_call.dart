@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:country_quiz/features/models/country_api_response.dart';
-import 'package:country_quiz/features/models/question.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
