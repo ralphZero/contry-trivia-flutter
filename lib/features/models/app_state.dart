@@ -22,6 +22,7 @@ class AppState extends ChangeNotifier {
     isLoading = true;
     data = await fetchCountryData();
     isLoading = false;
+    resetCounters();
     generateQuestion();
   }
 
@@ -67,8 +68,14 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetCounters() {
+    score = 0;
+    started = 0;
+  }
+
   void updateScore() {
     score++;
+    started++;
     notifyListeners();
   }
 }

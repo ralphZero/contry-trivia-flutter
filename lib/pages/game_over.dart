@@ -1,5 +1,7 @@
 import 'package:country_quiz/features/models/app_state.dart';
 import 'package:country_quiz/mocks/game_over_cms.dart';
+import 'package:country_quiz/pages/home.dart';
+import 'package:country_quiz/pages/wrapper.dart';
 import 'package:country_quiz/utils/constants.dart';
 import 'package:country_quiz/widgets/gameover/home_btn.dart';
 import 'package:country_quiz/widgets/gameover/retry_btn.dart';
@@ -47,12 +49,24 @@ class _GameOverState extends State<GameOver> {
                   children: [
                     RetryButton(
                       cms: cms,
-                      handleClick: () {},
+                      handleClick: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (_) => const Wrapper(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 16.0),
                     GoToHomeButton(
                       cms: cms,
-                      handleClick: () {},
+                      handleClick: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (_) => const Home(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

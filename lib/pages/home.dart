@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
     var homeCMS = HomeCMS();
 
     void handlePlay() {
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => const Wrapper(),
         ),
@@ -34,11 +34,6 @@ class _HomeState extends State<Home> {
     void handleOpenLeaderboard() {
       // print('Open Leaderboard');
       // TODO: Go to leaderboard page
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => const GameOver(),
-        ),
-      );
     }
 
     return Scaffold(

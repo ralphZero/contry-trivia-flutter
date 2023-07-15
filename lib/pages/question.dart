@@ -1,4 +1,5 @@
 import 'package:country_quiz/mocks/question_cms.dart';
+import 'package:country_quiz/pages/game_over.dart';
 import 'package:country_quiz/utils/constants.dart';
 import 'package:country_quiz/widgets/question/question_flag.dart';
 import 'package:country_quiz/widgets/question/question_prompt.dart';
@@ -56,8 +57,14 @@ class _QuestionPageState extends State<QuestionPage> {
         showNextButton = true;
       });
     } else {
-      // TODO: Wait and sent to results page
-      print('Game over');
+      Future.delayed(
+        const Duration(seconds: 1),
+        () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => const GameOver(),
+          ),
+        ),
+      );
     }
   }
 
