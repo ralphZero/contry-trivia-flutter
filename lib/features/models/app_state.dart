@@ -64,10 +64,6 @@ class AppState extends ChangeNotifier {
       question: questions[0],
     );
 
-    print(questions);
-    print(questions[0].capital);
-    print(questions[0].name);
-
     notifyListeners();
   }
 

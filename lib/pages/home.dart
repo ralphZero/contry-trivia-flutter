@@ -1,4 +1,5 @@
 import 'package:country_quiz/mocks/home_cms.dart';
+import 'package:country_quiz/pages/game_over.dart';
 import 'package:country_quiz/pages/wrapper.dart';
 import 'package:country_quiz/widgets/home/cta_group.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,11 @@ class _HomeState extends State<Home> {
     void handleOpenLeaderboard() {
       // print('Open Leaderboard');
       // TODO: Go to leaderboard page
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => const GameOver(),
+        ),
+      );
     }
 
     return Scaffold(
