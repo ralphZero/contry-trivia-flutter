@@ -1,5 +1,4 @@
 import 'package:country_quiz/mocks/home_cms.dart';
-import 'package:country_quiz/pages/game_over.dart';
 import 'package:country_quiz/pages/wrapper.dart';
 import 'package:country_quiz/widgets/home/cta_group.dart';
 import 'package:flutter/material.dart';

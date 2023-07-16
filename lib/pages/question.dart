@@ -5,6 +5,7 @@ import 'package:country_quiz/utils/constants.dart';
 import 'package:country_quiz/widgets/question/question_flag.dart';
 import 'package:country_quiz/widgets/question/question_prompt.dart';
 import 'package:country_quiz/widgets/question/score_box.dart';
+import 'package:country_quiz/widgets/question/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,13 @@ class _QuestionPageState extends State<QuestionPage> {
   bool showNextButton = false;
   int selectedAnswerId = -1;
   bool disabledOptions = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final appState = Provider.of<AppState>(context, listen: false);
+    appState.startTimer();
+  }
 
   void handleOnClose() {
     Navigator.of(context).pushReplacement(
@@ -92,6 +100,21 @@ class _QuestionPageState extends State<QuestionPage> {
               var answers = state.getCurrentQuestion!.answers;
               var answerId = state.getCurrentQuestion!.currAnswer;
               var score = state.getScore;
+              var timer = state.getTimerValue;
+              var progressIndicatorValue = timer / 15;
+
+              if (progressIndicatorValue == 0) {
+                Future.delayed(
+                  const Duration(seconds: 1),
+                  () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (_) => const GameOver(),
+                      ),
+                    );
+                  },
+                );
+              }
 
               return Column(
                 children: [
@@ -106,11 +129,9 @@ class _QuestionPageState extends State<QuestionPage> {
                           onPressed: handleOnClose,
                           color: Colors.white,
                         ),
-                        Text(
-                          'timer',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                          ),
+                        QuestionTimer(
+                          timer: timer,
+                          progressIndicatorValue: progressIndicatorValue,
                         ),
                       ],
                     ),

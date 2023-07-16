@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:country_quiz/features/controllers/api_call.dart';
 import 'package:country_quiz/features/models/country_api_response.dart';
@@ -11,12 +12,14 @@ class AppState extends ChangeNotifier {
   List<CountryApiResponse> data = [];
   Question? currQuestion;
   int score = 0;
+  int gameTimer = 15;
 
   // getters
   bool get getLoadingState => isLoading;
   int get getScore => score;
   int get getQuestionCount => started;
   Question? get getCurrentQuestion => currQuestion;
+  int get getTimerValue => gameTimer;
 
   void initialData() async {
     isLoading = true;
@@ -68,9 +71,30 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (gameTimer == 0) {
+          timer.cancel();
+        } else {
+          gameTimer--;
+        }
+        notifyListeners();
+      },
+    );
+  }
+
+  void updateGameTimer(int value) {
+    gameTimer += value;
+    notifyListeners();
+  }
+
   void resetCounters() {
     score = 0;
     started = 0;
+    gameTimer = 15;
   }
 
   void updateScore() {
