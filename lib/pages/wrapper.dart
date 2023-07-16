@@ -1,5 +1,6 @@
 import 'package:country_quiz/features/models/app_state.dart';
 import 'package:country_quiz/pages/question.dart';
+import 'package:country_quiz/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,14 @@ class _WrapperState extends State<Wrapper> {
       return const QuestionPage();
     } else {
       // loading
-      return const CircularProgressIndicator();
+      return Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(gradient: pageGradient),
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
   }
 }
