@@ -26,7 +26,7 @@ class _WrapperState extends State<Wrapper> {
     if (!appState.getLoadingState && !appState.gameOver) {
       // has data
       return const QuestionPage();
-    } else if (appState.gameStatus) {
+    } else if (appState.getGameStatus) {
       return const GameOver();
     } else {
       // loading

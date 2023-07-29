@@ -98,17 +98,6 @@ class _QuestionPageState extends State<QuestionPage> {
               var answerId = state.getCurrentQuestion!.currAnswer;
               var score = state.getScore;
               var timer = state.getTimerValue;
-              var progressIndicatorValue = timer / 15;
-
-              if (progressIndicatorValue == 0) {
-                state.timer.cancel();
-                Future.delayed(
-                  const Duration(seconds: 1),
-                  () {
-                    state.setGameOver();
-                  },
-                );
-              }
 
               return Column(
                 children: [
@@ -125,7 +114,6 @@ class _QuestionPageState extends State<QuestionPage> {
                         ),
                         QuestionTimer(
                           timer: timer,
-                          progressIndicatorValue: progressIndicatorValue,
                         ),
                       ],
                     ),

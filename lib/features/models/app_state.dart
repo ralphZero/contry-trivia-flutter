@@ -12,7 +12,9 @@ class AppState extends ChangeNotifier {
   List<CountryApiResponse> data = [];
   Question? currQuestion;
   int score = 0;
+  int initalGameTimerValue = 15;
   int gameTimer = 15;
+  TimerStatus _timerStatus = TimerStatus.stopped;
   late Timer timer;
   bool gameOver = false;
 
@@ -22,7 +24,8 @@ class AppState extends ChangeNotifier {
   int get getQuestionCount => started;
   Question? get getCurrentQuestion => currQuestion;
   int get getTimerValue => gameTimer;
-  bool get gameStatus => gameOver;
+  bool get getGameStatus => gameOver;
+  TimerStatus get getCountdownStatus => _timerStatus;
 
   void initialData() async {
     isLoading = true;
@@ -82,13 +85,16 @@ class AppState extends ChangeNotifier {
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
+    _timerStatus = TimerStatus.started;
     timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         if (gameTimer == 0) {
+          _timerStatus = TimerStatus.stopped;
           timer.cancel();
+          gameOver = true;
         } else {
-          gameTimer--;
+          gameTimer -= 1;
         }
         notifyListeners();
       },
@@ -97,16 +103,18 @@ class AppState extends ChangeNotifier {
 
   void stopTimer() {
     if (timer.isActive) {
+      _timerStatus = TimerStatus.stopped;
       timer.cancel();
       notifyListeners();
     }
   }
 
   void resetTimer() {
+    _timerStatus = TimerStatus.reset;
     if (timer.isActive) {
       timer.cancel();
     }
-    gameTimer = 15;
+    gameTimer = initalGameTimerValue;
     startTimer();
   }
 
@@ -118,7 +126,7 @@ class AppState extends ChangeNotifier {
   void resetCounters() {
     score = 0;
     started = 0;
-    gameTimer = 15;
+    gameTimer = initalGameTimerValue;
   }
 
   void updateScore() {
@@ -126,4 +134,10 @@ class AppState extends ChangeNotifier {
     started++;
     notifyListeners();
   }
+}
+
+enum TimerStatus {
+  started,
+  stopped,
+  reset,
 }
