@@ -13,6 +13,8 @@ class AppState extends ChangeNotifier {
   Question? currQuestion;
   int score = 0;
   int gameTimer = 15;
+  late Timer timer;
+  bool gameOver = false;
 
   // getters
   bool get getLoadingState => isLoading;
@@ -20,11 +22,13 @@ class AppState extends ChangeNotifier {
   int get getQuestionCount => started;
   Question? get getCurrentQuestion => currQuestion;
   int get getTimerValue => gameTimer;
+  bool get gameStatus => gameOver;
 
   void initialData() async {
     isLoading = true;
     data = await fetchCountryData();
     isLoading = false;
+    gameOver = false;
     resetCounters();
     generateQuestion();
   }
@@ -71,9 +75,14 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setGameOver() {
+    gameOver = true;
+    notifyListeners();
+  }
+
   void startTimer() {
     const oneSec = Duration(seconds: 1);
-    Timer.periodic(
+    timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         if (gameTimer == 0) {
@@ -84,6 +93,21 @@ class AppState extends ChangeNotifier {
         notifyListeners();
       },
     );
+  }
+
+  void stopTimer() {
+    if (timer.isActive) {
+      timer.cancel();
+      notifyListeners();
+    }
+  }
+
+  void resetTimer() {
+    if (timer.isActive) {
+      timer.cancel();
+    }
+    gameTimer = 15;
+    startTimer();
   }
 
   void updateGameTimer(int value) {

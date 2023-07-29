@@ -51,11 +51,13 @@ class _QuestionPageState extends State<QuestionPage> {
     });
 
     appState.generateQuestion();
+    appState.resetTimer();
   }
 
   void handleOnOptionPressed(int selectedId) {
-    // if correct question
     var appState = context.read<AppState>();
+    appState.stopTimer();
+
     var currentAnswerId = appState.currQuestion!.currAnswer;
 
     setState(() {
@@ -63,20 +65,16 @@ class _QuestionPageState extends State<QuestionPage> {
       selectedAnswerId = selectedId;
     });
 
+    // if correct question
     if (currentAnswerId == selectedId) {
       appState.updateScore();
       setState(() {
         showNextButton = true;
       });
     } else {
-      Future.delayed(
-        const Duration(seconds: 1),
-        () => Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (_) => const GameOver(),
-          ),
-        ),
-      );
+      Future.delayed(const Duration(seconds: 1), () {
+        appState.setGameOver();
+      });
     }
   }
 
@@ -104,14 +102,11 @@ class _QuestionPageState extends State<QuestionPage> {
               var progressIndicatorValue = timer / 15;
 
               if (progressIndicatorValue == 0) {
+                state.timer.cancel();
                 Future.delayed(
                   const Duration(seconds: 1),
                   () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (_) => const GameOver(),
-                      ),
-                    );
+                    state.setGameOver();
                   },
                 );
               }

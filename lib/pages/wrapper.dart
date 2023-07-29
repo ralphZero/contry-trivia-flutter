@@ -1,4 +1,5 @@
 import 'package:country_quiz/features/models/app_state.dart';
+import 'package:country_quiz/pages/game_over.dart';
 import 'package:country_quiz/pages/question.dart';
 import 'package:country_quiz/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,11 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
-    if (!appState.getLoadingState) {
+    if (!appState.getLoadingState && !appState.gameOver) {
       // has data
       return const QuestionPage();
+    } else if (appState.gameStatus) {
+      return const GameOver();
     } else {
       // loading
       return Container(
