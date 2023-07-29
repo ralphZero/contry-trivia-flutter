@@ -1,5 +1,4 @@
 import 'package:country_quiz/mocks/question_cms.dart';
-import 'package:country_quiz/pages/game_over.dart';
 import 'package:country_quiz/pages/home.dart';
 import 'package:country_quiz/utils/constants.dart';
 import 'package:country_quiz/widgets/question/question_flag.dart';
